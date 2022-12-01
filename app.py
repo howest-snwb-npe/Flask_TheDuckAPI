@@ -17,8 +17,13 @@ def random():
 @app.route("/status-code",methods=["POST"])
 def status_code():
     status_code = request.form.get("status-code")
-    photo_url = f"https://random-d.uk/api/v2/http/{status_code}"
-    return render_template("status-code.html", photo_url=photo_url)
-
+    list_all = requests.get("https://random-d.uk/api/v2/list").json()["http"]
+    if f"{status_code}.jpg" in list_all:
+        photo_url = f"https://random-d.uk/api/v2/http/{status_code}"
+        return render_template("status-code.html", photo_url=photo_url, found=True)
+    else:
+        photo_url = f"https://random-d.uk/api/v2/http/404"
+        return render_template("status-code.html", photo_url=photo_url, found=False)
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

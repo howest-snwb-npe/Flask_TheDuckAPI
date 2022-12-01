@@ -4,6 +4,9 @@
 </head>
 <body>
     <h1>Welkom bij The Duck API</h1>
+    {% if found == False %}
+    <p style="color:red">Foto voor statuscode niet gevonden.</p>
+    {% endif %}
     <img src="{{ photo_url }}" height="50%"/>
 </body>
 </html>
